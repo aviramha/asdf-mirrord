@@ -57,7 +57,6 @@ download_release() {
 	# TODO: Adapt the release URL convention for mirrord
 	url="$GH_REPO/releases/download/${version}/mirrord_${OS}_${ARCH}"
 
-	echo $filename
 	echo "* Downloading $TOOL_NAME release $version..."
 	curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
 }
@@ -65,7 +64,7 @@ download_release() {
 install_version() {
 	local install_type="$1"
 	local version="$2"
-	local install_path="${3%/bin}/bin"
+	local install_path="${3%}"
 
 	if [ "$install_type" != "version" ]; then
 		fail "asdf-$TOOL_NAME supports release installs only"
