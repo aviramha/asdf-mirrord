@@ -41,8 +41,21 @@ download_release() {
 	version="$1"
 	filename="$2"
 
+	if [[ "$OSTYPE" == "linux"* ]]; then
+	ARCH=$(uname -m);
+	OS="linux";
+	if [[ "$ARCH" != "x86_64" && "$ARCH" != "aarch64" ]]; then
+		fail "mirrord is only available for linux x86_64/aarch64 architecture"
+	fi
+	elif [[ "$OSTYPE" == "darwin"* ]]; then
+		ARCH="universal";
+		OS="mac";
+	else
+		fail "mirrord isn't supported for your platform - $OSTYPE"
+	fi
+
 	# TODO: Adapt the release URL convention for mirrord
-	url="$GH_REPO/archive/v${version}.tar.gz"
+	url="$GH_REPO/releases/download/${version}/mirrord_${OS}\_${ARCH}"
 
 	echo "* Downloading $TOOL_NAME release $version..."
 	curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
