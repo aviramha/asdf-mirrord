@@ -2,7 +2,6 @@
 
 set -euo pipefail
 
-# TODO: Ensure this is the correct GitHub homepage where releases can be downloaded for mirrord.
 GH_REPO="https://github.com/metalbear-co/mirrord"
 TOOL_NAME="mirrord"
 TOOL_TEST="mirrord --version"
@@ -31,8 +30,6 @@ list_github_tags() {
 }
 
 list_all_versions() {
-	# TODO: Adapt this. By default we simply list the tag names from GitHub releases.
-	# Change this function if mirrord has other means of determining installable versions.
 	list_github_tags
 }
 
@@ -54,7 +51,6 @@ download_release() {
 		fail "mirrord isn't supported for your platform - $OSTYPE"
 	fi
 
-	# TODO: Adapt the release URL convention for mirrord
 	url="$GH_REPO/releases/download/${version}/mirrord_${OS}_${ARCH}"
 
 	echo $filename
@@ -75,7 +71,6 @@ install_version() {
 		mkdir -p "$install_path"
 		cp -r "$ASDF_DOWNLOAD_PATH"/* "$install_path"
 
-		# TODO: Assert mirrord executable exists.
 		local tool_cmd
 		tool_cmd="$(echo "$TOOL_TEST" | cut -d' ' -f1)"
 		test -x "$install_path/$tool_cmd" || fail "Expected $install_path/$tool_cmd to be executable."
