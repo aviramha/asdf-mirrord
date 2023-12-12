@@ -57,6 +57,7 @@ download_release() {
 	# TODO: Adapt the release URL convention for mirrord
 	url="$GH_REPO/releases/download/${version}/mirrord_${OS}_${ARCH}"
 
+	echo $filename
 	echo "* Downloading $TOOL_NAME release $version..."
 	curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
 }
